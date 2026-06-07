@@ -1,18 +1,14 @@
-// safe.c — safe constant arithmetic and allocation
+// safe_malloc_constant.c — constant allocation should not be flagged
 #include <stdio.h>
 #include <stdlib.h>
 
 int main() {
-    int a = 1000;
-    int b = 2000;
-    int result = a * b;
-
     int *buffer = malloc(16);
     if (buffer == NULL) {
         return 1;
     }
 
-    printf("Result: %d\n", result);
+    printf("Buffer allocated\n");
     free(buffer);
     return 0;
 }

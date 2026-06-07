@@ -1,12 +1,21 @@
-// risky2.c — malloc multiplication overflow
+// risky_malloc.c — malloc multiplication overflow in a flow
 #include <stdio.h>
 #include <stdlib.h>
 
-int main() {
-    int n = 50000;
+static int read_count(void) {
+    int n = 0;
+    if (scanf("%d", &n) != 1) {
+        return 0;
+    }
+    return n;
+}
 
-    // CRITICAL: n * sizeof(int) can overflow if n is large enough
-    // attacker-controlled n could make malloc allocate far less memory than expected
+int main() {
+    int n = read_count();
+    if (n <= 0) {
+        return 1;
+    }
+
     int *arr = malloc(n * sizeof(int));
 
     if (arr == NULL) {

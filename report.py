@@ -29,8 +29,13 @@ def generate_html(filename: str, source: str, findings: list[Finding]) -> str:
         rows += f"""
         <tr style="background:{bg}">
           <td style="text-align:center;font-weight:bold">{f.line_number}</td>
+          <td>{_esc(f.function_name)}</td>
+          <td><code>{_esc(f.expression)}</code></td>
           <td><code>{_esc(f.line_content)}</code></td>
           <td style="color:{color};font-weight:bold;text-align:center">{f.risk}</td>
+          <td style="text-align:center">{_esc(f.risk_type)}</td>
+          <td style="text-align:center">{_esc(f.certainty_type)}</td>
+          <td style="font-weight:bold;text-align:center">{f.confidence}</td>
           <td>{_esc(f.reason)}</td>
           <td style="font-family:monospace;font-size:0.85em">{_esc(f.suggestion)}</td>
         </tr>"""
@@ -102,11 +107,12 @@ def generate_html(filename: str, source: str, findings: list[Finding]) -> str:
   <table>
     <thead>
       <tr>
-        <th>Line</th><th>Code</th><th>Severity</th>
+        <th>Line</th><th>Function</th><th>Expression</th><th>Code</th>
+        <th>Severity</th><th>Risk Type</th><th>Certainty</th><th>Confidence</th>
         <th>Reason</th><th>Suggested Fix</th>
       </tr>
     </thead>
-    <tbody>{rows if rows else '<tr><td colspan="5" style="text-align:center;padding:20px">No vulnerabilities found.</td></tr>'}</tbody>
+    <tbody>{rows if rows else '<tr><td colspan="10" style="text-align:center;padding:20px">No vulnerabilities found.</td></tr>'}</tbody>
   </table>
 
   <h2 style="margin-top:40px">Annotated Source</h2>
